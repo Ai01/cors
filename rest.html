@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>rest</title>
+</head>
+<body>
+	<input type="button" name="get" value='get'/>
+	<input type="button" name="put" value='put'/>
+	<input type="button" name="delete" value='delete'/>
+	<input type="button" name="post" value='post' id='test'/>
+	<script type="text/javascript">
+		function reqListener(){
+			console.log('response',this.responseText);
+		}
+
+		function ajaxReq(method){
+			var myReq = new XMLHttpRequest();
+			myReq.addEventListener('load',reqListener);
+			if(method == 'get'){
+				myReq.open('get','http://localhost:8000');
+				myReq.send();
+			}else if(method == 'post'){
+				myReq.open('post','http://localhost:8000');
+				myReq.setRequestHeader('content-type','text/plain');
+				myReq.send('bai');
+			}else if(method == 'delete'){
+				myReq.open(method,'http://localhost:8000');
+				myReq.send();
+			}else{
+				myReq.open('put','http://localhost:8000');
+				myReq.setRequestHeader('content-type','text/plain');
+				myReq.send('bai');
+			}
+		}
+
+		var inputs = document.getElementsByTagName('input');
+		for(var i=0;i<inputs.length;i++){
+			(function (i) {
+				inputs[i].onclick=function(){ajaxReq(this.value)};	
+			})(i)
+		}	
+
+	</script>
+</body>
+</html>
