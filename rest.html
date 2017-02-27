@@ -15,6 +15,7 @@
 
 		function ajaxReq(method){
 			var myReq = new XMLHttpRequest();
+			myReq.withCredentials=true;
 			myReq.addEventListener('load',reqListener);
 			if(method == 'get'){
 				myReq.open('get','http://localhost:8000');
@@ -28,8 +29,12 @@
 				myReq.send();
 			}else{
 				myReq.open('put','http://localhost:8000');
-				myReq.setRequestHeader('content-type','text/plain');
-				myReq.send('bai');
+				// unsafe ?不清楚需要解决
+				myReq.setRequestHeader('Access-Control-Request-Headers','X-Custom-Header');
+				myReq.setRequestHeader('content-type','text/plain'); 
+				myReq.setRequestHeader('X-Custom-Header','5');
+				// myReq.send('bai');
+				myReq.send();
 			}
 		}
 
